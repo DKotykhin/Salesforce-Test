@@ -1,0 +1,85 @@
+<aura:component access="global" implements="force:hasSObjectName,
+        force:lightningQuickActionWithoutHeader,
+        force:appHostable,
+        flexipage:availableForAllPageTypes,
+        flexipage:availableForRecordHome,
+        force:hasRecordId">
+
+    <aura:attribute name="nameOptions" type="List" default="[
+        {'label': 'Coffee Beans Honduras', 'value': 'Honduras'},
+        {'label': 'Coffee Beans Brazil', 'value': 'Brazil'},
+        {'label': 'Coffee Beans Guatemala', 'value': 'Guatemala'},
+        {'label': 'Coffee Beans Colombia', 'value': 'Colombia'},
+        {'label': 'Coffee Beans Ethiopia', 'value': 'Ethiopia'},
+        ]"/>
+    <aura:attribute name="roastOptions" type="List" default="[
+        {'label': 'Light', 'value': 'Light'},
+        {'label': 'Medium', 'value': 'Medium'},
+        {'label': 'Dark', 'value': 'Dark'},
+        ]"/>
+    <aura:attribute name="weightOptions" type="List" default="[
+        {'label': '250g', 'value': '250'},
+        {'label': '500g', 'value': '500'},
+        {'label': '1kg', 'value': '1000'},
+        ]"/>
+        
+    <aura:attribute name="image" type="String" default="{!$Resource.Coffee_Honduras}"/>                 
+
+    <!-- <lightning:notificationsLibrary aura:id="notifLib" /> -->
+
+    <aura:attribute name="newDelivery" type="Object"/>
+    <aura:attribute name="deliveryFields" type="Object"/>
+    <aura:attribute name="newDeliveryError" type="String"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <force:recordData aura:id="deliveryRecordCreator" 
+                      fields="Name, Price__c, Roast__c, Weight__c, Address__c"
+                      targetRecord="{!v.newDelivery}"
+                      targetFields="{!v.deliveryFields}"
+                      targetError="{!v.newDeliveryError}" />                      
+    
+    <lightning:card iconName="standard:customer" title="Create New Delivery">
+        <div class="slds-p-horizontal--small">
+            <img src="{!v.image}" alt="coffee Honduras" width="100"/>
+            <br/><br/>
+            <lightning:combobox name="selectName"
+                        aura:id="itemField" 
+                        label="Choose the item..." 
+                        value="{!v.deliveryFields.Name}" 
+                        placeholder="Select Item..." 
+                        options="{!v.nameOptions }" 
+                        onchange="{!c.handleChangeName }"/>
+            <br/>
+            <lightning:combobox name="selectRoast"
+                        aura:id="itemField" 
+                        label="Choose the roast..." 
+                        value="{!v.deliveryFields.Roast__c}" 
+                        placeholder="Select Item..." 
+                        options="{!v.roastOptions }" 
+                        />
+            <br/>
+            <lightning:combobox name="selectWeight" 
+                        aura:id="itemField"
+                        label="Choose the weight..." 
+                        value="{!v.deliveryFields.Weight__c}" 
+                        placeholder="Select Item..." 
+                        options="{!v.weightOptions }" 
+                        />
+            <br/>
+            <!-- <lightning:input aura:id="itemField" label="Price" value="{!v.deliveryFields.Price__c}"/>
+            <br/><br/> -->    
+            <lightning:input aura:id="itemField" label="Address" placeholder="Type your address..." value="{!v.deliveryFields.Address__c}"/>
+            <lightning:textarea aura:id="itemField" label="Comments" placeholder="Leave any comments..." value="{!v.deliveryFields.Comments__c}" maxlength="300" />
+            <br/><br/>
+            <lightning:button label="Get Delivery" variant="brand" onclick="{!c.handleSaveDelivery}"/>
+        </div>
+    </lightning:card>   
+
+    <!-- Display Lightning Data Service errors -->
+    <aura:if isTrue="{!not(empty(v.newDeliveryError))}">
+        <div class="recordError">
+            {!v.newDeliveryError}</div>
+    </aura:if>  
+   
+</aura:component>	

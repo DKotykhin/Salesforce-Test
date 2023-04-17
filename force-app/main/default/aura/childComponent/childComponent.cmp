@@ -1,0 +1,29 @@
+<aura:component>
+    <aura:attribute name="parentAction" type="Aura.Action"/>
+    <aura:attribute name="valueForParent" type="String"
+                    default="child value for parent" />
+
+    <p>Child Component</p>
+    <lightning:button label="Call Parent Method" onclick="{!v.parentAction}" />
+
+
+    <aura:method name="show" action="{!c.showMessage}" access="PUBLIC">
+        <aura:attribute name="message" type="String" default=""/>
+    </aura:method>
+
+    <aura:method name="error" action="{!c.showErrorMessage}" access="PUBLIC">
+        <aura:attribute name="message" type="String"/>
+    </aura:method>
+
+    <aura:method name="remove" action="{!c.removeMessage}" access="PUBLIC"/>
+     
+    <div aura:id="messages" />
+
+
+    <aura:registerEvent name="cmpEvent" type="c:eventComponent" />
+    <aura:attribute name="messageString" type="String" />
+    <h1>Component Event Notifier</h1>
+    <lightning:input label="Message" value="{!v.messageString}"/>
+    <lightning:button label="Fire Component Event" onclick="{!c.fireComponentEvent}" />
+
+</aura:component>	

@@ -1,0 +1,36 @@
+<aura:component>
+    <aura:attribute name="valueFromChild" type="String" />
+    <p>Parent Component</p>
+    <br/>
+    <p>Value from Child Component: {!v.valueFromChild}</p>
+    <hr/>
+    <c:childComponent aura:id="messages" parentAction="{!c.methodFromChild}"/>
+    <br/>
+    <p>Child Component Ends here</p>
+    <br/>
+    <hr/>
+    
+    <h1>Calling method of Child Component through Parent Component</h1>
+    <!-- <c:childComponent aura:id="messages" /> -->    
+    <lightning:button label="Show Confirmation" onclick="{!c.handleShow}"/>
+    <lightning:button label="Show Error" onclick="{!c.handleError}"/>
+    <lightning:button label="Remove Message" onclick="{!c.handleRemove}"/>    
+    <br/>
+    <hr/>
+
+    <aura:attribute name="MsgFromNotifier" type="String" />
+    <aura:attribute name="label" type="String" />
+    <aura:attribute name="eventCount" type="Integer" default="0" />
+    <aura:handler name="cmpEvent" event="c:eventComponent" action="{!c.handleComponentEvent}" />
+    <h1>Component Event Handler</h1>
+    <aura:if isTrue="{!v.MsgFromNotifier}">
+        <p>Input value: {!v.MsgFromNotifier}</p>
+    </aura:if>
+    <aura:if isTrue="{!v.label}">
+        <p>{!v.label}: {!v.eventCount}</p>
+    </aura:if>
+
+
+    <br/>
+    <p>Parent Component Ends here</p>
+</aura:component>	

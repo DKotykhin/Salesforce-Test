@@ -1,0 +1,81 @@
+<aura:component access="global" implements="force:hasSObjectName,
+        force:lightningQuickActionWithoutHeader,
+        force:appHostable,
+        flexipage:availableForAllPageTypes,
+        flexipage:availableForRecordHome,
+        force:hasRecordId" controller="MyContactListController">
+
+    <aura:attribute name="fields" type="String[]" default="['Name', 'Industry']" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="recordError" type="String"/>
+    <!-- <lightning:recordForm 
+        recordId = "{!v.recordId}"
+        objectApiName="Account"
+        layoutType="Compact"
+        mode="readonly"
+        columns="2" /> -->
+        
+    <hr/>    
+    <!-- <lightning:recordForm objectApiName="Account" fields="{!v.fields}" /> -->
+    <lightning:recordForm recordId="{!v.recordId}" 
+                            objectApiName="Account"
+                            density="auto"
+                            fields="{!v.fields}" />
+    <hr/>
+
+    <lightning:recordViewForm recordId="{!v.recordId}" 
+        objectApiName="Account">
+        <div class="slds-grid">
+            <div class="slds-col slds-size_2-of-3">
+                <lightning:outputField fieldName="Name" />
+                <lightning:outputField fieldName="Phone" />
+            </div>
+            <div class="slds-col slds-size_1-of-3">
+                <lightning:outputField fieldName="Industry" />
+                <lightning:outputField fieldName="AnnualRevenue" />
+            </div>
+        </div>
+    </lightning:recordViewForm>
+    <hr/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="Contacts" type="Contact" />
+    <aura:attribute name="State" type="String" />
+    <p><b>{!v.State}:</b></p>
+    <br/>
+    <aura:iteration items="{!v.Contacts}" var="contact">
+        <p>FirstName: {!contact.FirstName}</p>
+        <p>LastName: {!contact.LastName}</p>
+        <p>Email: {!contact.Email}</p>
+        <p>Phone: {!contact.Phone}</p>
+        <br/>
+    </aura:iteration>
+    <hr/>
+
+    <!-- <aura:attribute name="whom" type="String" default="world" /> -->
+    <aura:attribute name="whom" type="String" />
+    <div aura:id="changeIt" class="hello">Hello {!v.whom}</div>
+
+    <lightning:button aura:id="button1" name="button1" onclick="{!c.applyCSS}" label="Add Style" class="button" />
+    <lightning:button aura:id="button2" name="button2" onclick="{!c.removeCSS}" label="Remove Style" class="button" />
+    <lightning:button aura:id="button3" onclick="{!c.addText}" label="Add Text" class="button" />
+
+    <aura:attribute name="setMeOnInit" type="String" />
+    <p><b>{!v.setMeOnInit}</b></p>
+    <hr/>
+
+    <aura:attribute name="numbers" type="List" />
+    <lightning:button onclick="{!c.getNumbers}" label="Display Numbers" class="button" variant="brand" />
+    <aura:iteration var="num" indexVar="index" items="{!v.numbers}">
+        <span>{!index}-</span>       
+        <span>{!num.value}, </span>        
+    </aura:iteration>
+    <hr/>
+
+    <lightning:input aura:id="inputCmp" label="Enter a number: " placeholder="Enter Number..."/>
+    <br/>
+    You entered: <lightning:formattedText aura:id="outNumber" value="" />
+    <br/><br/>
+    <lightning:button label="Submit" onclick="{!c.inputClick}"/>
+
+</aura:component>

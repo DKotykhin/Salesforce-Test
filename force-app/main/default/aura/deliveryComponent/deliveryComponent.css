@@ -1,0 +1,16 @@
+.THIS.container {
+    padding: 20px;
+}
+
+.THIS.title {
+    font-size: 1.5rem;
+    padding-left: 20px;
+}
+
+.THIS.recordError {
+    color: #ff0000;
+}
+
+.THIS .value {
+    font-weight: bold;
+}
