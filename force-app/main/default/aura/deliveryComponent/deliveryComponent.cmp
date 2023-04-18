@@ -18,23 +18,26 @@
         {'label': 'Dark', 'value': 'Dark'},
         ]"/>
     <aura:attribute name="weightOptions" type="List" default="[
-        {'label': '250g', 'value': '250'},
-        {'label': '500g', 'value': '500'},
-        {'label': '1kg', 'value': '1000'},
+        {'label': '250g', 'value': '1'},
+        {'label': '500g', 'value': '2'},
+        {'label': '1kg', 'value': '4'},
         ]"/>
         
     <aura:attribute name="image" type="String" default="{!$Resource.Coffee_Honduras}"/>                 
 
-    <!-- <lightning:notificationsLibrary aura:id="notifLib" /> -->
+    <lightning:notificationsLibrary aura:id="notifLib" />
 
     <aura:attribute name="newDelivery" type="Object"/>
     <aura:attribute name="deliveryFields" type="Object"/>
     <aura:attribute name="newDeliveryError" type="String"/>
 
+    <aura:attribute name="itemPrice" type="Decimal" default="0"/>
+    <aura:attribute name="totalPrice" type="Decimal" default="0"/>
+
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
 
     <force:recordData aura:id="deliveryRecordCreator" 
-                      fields="Name, Price__c, Roast__c, Weight__c, Address__c"
+                      fields="Name, Price__c, Roast__c, Weight__c, Address__c, Quantity__c"
                       targetRecord="{!v.newDelivery}"
                       targetFields="{!v.deliveryFields}"
                       targetError="{!v.newDeliveryError}" />                      
@@ -44,33 +47,46 @@
             <img src="{!v.image}" alt="coffee Honduras" width="100"/>
             <br/><br/>
             <lightning:combobox name="selectName"
-                        aura:id="itemField" 
+                        aura:id="itemFieldName" 
                         label="Choose the item..." 
                         value="{!v.deliveryFields.Name}" 
                         placeholder="Select Item..." 
-                        options="{!v.nameOptions }" 
-                        onchange="{!c.handleChangeName }"/>
+                        options="{!v.nameOptions }"
+                        required="true" 
+                        onchange="{!c.handleChangeName }"
+                        />
             <br/>
             <lightning:combobox name="selectRoast"
-                        aura:id="itemField" 
+                        aura:id="itemFieldRoast" 
                         label="Choose the roast..." 
                         value="{!v.deliveryFields.Roast__c}" 
                         placeholder="Select Item..." 
+                        required="true"
                         options="{!v.roastOptions }" 
                         />
             <br/>
             <lightning:combobox name="selectWeight" 
-                        aura:id="itemField"
+                        aura:id="itemFieldWeight"
+                        type="number"
                         label="Choose the weight..." 
                         value="{!v.deliveryFields.Weight__c}" 
                         placeholder="Select Item..." 
-                        options="{!v.weightOptions }" 
+                        options="{!v.weightOptions }"
+                        required="true"
+                        onchange="{!c.handleChangeWeight}" 
                         />
             <br/>
-            <!-- <lightning:input aura:id="itemField" label="Price" value="{!v.deliveryFields.Price__c}"/>
-            <br/><br/> -->    
-            <lightning:input aura:id="itemField" label="Address" placeholder="Type your address..." value="{!v.deliveryFields.Address__c}"/>
-            <lightning:textarea aura:id="itemField" label="Comments" placeholder="Leave any comments..." value="{!v.deliveryFields.Comments__c}" maxlength="300" />
+            <lightning:input aura:id="itemFieldQuantity"
+                        type="number" 
+                        label="Quantity" 
+                        value="{!v.deliveryFields.Quantity__c}"
+                        onchange="{!c.handleChangeQuantity}"
+                        />
+            <br/><br/>    
+            <lightning:input aura:id="itemFieldAddress" label="Address" required="true" placeholder="Type your address..." value="{!v.deliveryFields.Address__c}"/>
+            <lightning:textarea aura:id="itemFieldComments" label="Comments" placeholder="Leave any comments..." value="{!v.deliveryFields.Comments__c}" maxlength="300" />
+            <br/><br/>
+            <p>Your total price: {!v.totalPrice}</p>
             <br/><br/>
             <lightning:button label="Get Delivery" variant="brand" onclick="{!c.handleSaveDelivery}"/>
         </div>
