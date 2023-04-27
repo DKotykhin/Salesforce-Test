@@ -21,8 +21,8 @@
         action.setCallback(this, function (response) {
             var state = response.getState();
             var contacts = response.getReturnValue();
-            console.log("1: ", state);
-            console.log(contacts);
+            // console.log("1: ", state);
+            // console.log(contacts);
             cmp.set("v.State", state);
             cmp.set("v.Contacts", contacts);
         });

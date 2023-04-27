@@ -1,0 +1,78 @@
+<template>
+    <template if:true={record.data}>
+        <div class="slds-text-heading_medium slds-align_absolute-center" style="height:5rem">
+            <p><b>Delivery List of {name}</b></p>       
+        </div>
+    </template>
+    <template if:true={deliveryList}>       
+        <template if:false={deliveryList.length}>
+            <div class="slds-text-heading_small slds-m-around_small">
+                >>> The Account doesn't have any delivery item
+            </div>
+        </template>
+    </template>
+    <template for:each={deliveryList} for:item="deliveryItem">
+        <!-- <lightning-card title="Delivery Item" key={deliveryItem.Id} icon-name="custom:custom14" class="slds-col slds-size_1-of-3 slds-m-bottom_small">
+            <ul class="slds-m-around_medium"> 
+                <li>
+                    Name: {deliveryItem.Contact__r.Name}
+                </li>          
+                <li>
+                    Delivery item: {deliveryItem.Name}
+                </li>
+                <li>
+                    Roast: {deliveryItem.Roast__c}
+                </li>
+                <li>
+                    Weight: {deliveryItem.Weight__c}g
+                </li>
+                <li>
+                    Quantity: {deliveryItem.Quantity__c}
+                </li>
+                <li>
+                    Total Price: {deliveryItem.Price__c}
+                </li>
+            </ul>
+        </lightning-card> -->
+        <div key={deliveryItem.Id} class="slds-grid slds-wrap slds-m-bottom_medium slds-box">
+                
+            <div class="slds-col slds-size_2-of-12 slds-text-align_center slds-theme_alt-inverse slds-m-bottom_small">
+                <span>Name</span>
+            </div>
+            <div class="slds-col slds-size_2-of-12 slds-text-align_center slds-theme_shade">
+                <span>Delivery item</span>
+            </div>
+            <div class="slds-col slds-size_2-of-12 slds-text-align_center slds-theme_shade">
+                <span>Roast</span>
+            </div>
+            <div class="slds-col slds-size_2-of-12 slds-text-align_center slds-theme_shade">
+                <span>Weight</span>
+            </div>
+            <div class="slds-col slds-size_2-of-12 slds-text-align_center slds-theme_shade">
+                <span>Quantity</span>
+            </div>
+            <div class="slds-col slds-size_2-of-12 slds-text-align_center slds-theme_shade">
+                <span>Total Price</span>
+            </div>
+            
+            <div class="slds-col slds-size_2-of-12 slds-text-align_center">
+                <span>{deliveryItem.Contact__r.Name}</span>
+            </div>
+            <div class="slds-col slds-size_2-of-12 slds-text-align_center">
+                <span>{deliveryItem.Name}</span>
+            </div>
+            <div class="slds-col slds-size_2-of-12 slds-text-align_center">
+                <span>{deliveryItem.Roast__c}</span>
+            </div>
+            <div class="slds-col slds-size_2-of-12 slds-text-align_center">
+                <span>{deliveryItem.Weight__c}g</span>
+            </div>
+            <div class="slds-col slds-size_2-of-12 slds-text-align_center">
+                <span>{deliveryItem.Quantity__c}</span>
+            </div>
+            <div class="slds-col slds-size_2-of-12 slds-text-align_center">
+                <span>{deliveryItem.Price__c}</span>
+            </div>
+        </div>
+    </template>
+</template>

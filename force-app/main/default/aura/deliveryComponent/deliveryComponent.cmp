@@ -18,9 +18,9 @@
         {'label': 'Dark', 'value': 'Dark'},
         ]"/>
     <aura:attribute name="weightOptions" type="List" default="[
-        {'label': '250g', 'value': '1'},
-        {'label': '500g', 'value': '2'},
-        {'label': '1kg', 'value': '4'},
+        {'label': '250g', 'value': '250'},
+        {'label': '500g', 'value': '500'},
+        {'label': '1kg', 'value': '1000'},
         ]"/>
         
     <aura:attribute name="image" type="String" default="{!$Resource.Coffee_Honduras}"/>                 

@@ -31,7 +31,7 @@
         component.set("v.itemPrice", itemPrice);
         const quantityValue = component.find("itemFieldQuantity").get("v.value");
         const weightValue = component.find("itemFieldWeight").get("v.value");
-        const totalPrice = itemPrice * weightValue * quantityValue;
+        const totalPrice = itemPrice * this.returnWeightFactor(weightValue) * quantityValue;
         if (totalPrice) {
             component.set("v.totalPrice", totalPrice);
         } else {
@@ -44,7 +44,7 @@
         const weightValue = +event.getParam("value");
         const itemPrice = component.get("v.itemPrice");
         const quantityValue = component.find("itemFieldQuantity").get("v.value");
-        const totalPrice = itemPrice * weightValue * quantityValue;
+        const totalPrice = itemPrice * this.returnWeightFactor(weightValue) * quantityValue;
         component.set("v.totalPrice", totalPrice);
     },
 
@@ -52,8 +52,22 @@
         const quantityValue = event.getParam("value");
         const itemPrice = component.get("v.itemPrice");
         const weightValue = component.find("itemFieldWeight").get("v.value");
-        const totalPrice = itemPrice * weightValue * quantityValue;
+        const totalPrice = itemPrice * this.returnWeightFactor(weightValue) * quantityValue;
         component.set("v.totalPrice", totalPrice);
+    },
+
+    returnWeightFactor: function (value) {
+        let factor;
+        switch (value) {
+            case 250: factor = 1;
+                break;
+            case 500: factor = 2;
+                break;
+            case 1000: factor = 4;
+                break;
+            default: factor = 1;
+        }
+        return factor;
     },
 
     validationMethod: function (component) {
