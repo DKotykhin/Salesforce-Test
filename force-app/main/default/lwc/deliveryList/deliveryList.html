@@ -1,41 +1,25 @@
 <template>
     <template if:true={record.data}>
-        <div class="slds-text-heading_medium slds-align_absolute-center" style="height:5rem">
+        <div class="slds-text-heading_medium slds-align_absolute-center slds-box slds-theme_shade slds-theme_alert-texture slds-m-bottom_large" style="height:5rem">
             <p><b>Delivery List of {name}</b></p>       
         </div>
     </template>
+    <div class="slds-m-bottom_large" style="width:200px">
+        <c-delivery-combobox name="name" value={nameValue} label="Find by name" options={nameOptions} oncomboboxclick={handleClick}></c-delivery-combobox>
+        <c-delivery-combobox name="item" value={itemValue} label="Find by item" options={itemOptions} oncomboboxclick={handleClick}></c-delivery-combobox>
+    </div>
     <template if:true={deliveryList}>       
         <template if:false={deliveryList.length}>
-            <div class="slds-text-heading_small slds-m-around_small">
-                >>> The Account doesn't have any delivery item
+            <div class="slds-box slds-theme_shade slds-text-heading_small slds-m-around_small">
+                <lightning-icon icon-name="utility:warning" alternative-text="Warning!" variant="warning"
+                    title="warning variant x-small" size="small">
+                </lightning-icon>
+                <span class="slds-p-left_large" style="color:#c47f00">The Account doesn't have any delivery item</span>                
             </div>
         </template>
     </template>
     <template for:each={deliveryList} for:item="deliveryItem">
-        <!-- <lightning-card title="Delivery Item" key={deliveryItem.Id} icon-name="custom:custom14" class="slds-col slds-size_1-of-3 slds-m-bottom_small">
-            <ul class="slds-m-around_medium"> 
-                <li>
-                    Name: {deliveryItem.Contact__r.Name}
-                </li>          
-                <li>
-                    Delivery item: {deliveryItem.Name}
-                </li>
-                <li>
-                    Roast: {deliveryItem.Roast__c}
-                </li>
-                <li>
-                    Weight: {deliveryItem.Weight__c}g
-                </li>
-                <li>
-                    Quantity: {deliveryItem.Quantity__c}
-                </li>
-                <li>
-                    Total Price: {deliveryItem.Price__c}
-                </li>
-            </ul>
-        </lightning-card> -->
-        <div key={deliveryItem.Id} class="slds-grid slds-wrap slds-m-bottom_medium slds-box">
-                
+        <div key={deliveryItem.Id} class="slds-grid slds-wrap slds-m-bottom_medium slds-box">               
             <div class="slds-col slds-size_2-of-12 slds-text-align_center slds-theme_alt-inverse slds-m-bottom_small">
                 <span>Name</span>
             </div>
